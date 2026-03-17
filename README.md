@@ -1,6 +1,6 @@
 # Project 3 - Animal Training App
 
-Andrew Liu
+Andrew Liu - new
 
 ## Description
 
