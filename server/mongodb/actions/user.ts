@@ -12,9 +12,14 @@ export async function getUser(userId: string) {
   return retrievedUser;
 }
 
-export async function updateUser(userId: string, newData: UserData) {
-  const updatedUser = await User.findByIdAndUpdate(userId, newData, { new: true });
-  return updatedUser;
+export async function getUsers() {
+  const retrievedUsers = await User.find({}, { password: 0});
+  return retrievedUsers;
+}
+
+export async function getUserByEmail(email: string) {
+  const retrievedUser = await User.findOne({ email });
+  return retrievedUser;
 }
 
 export async function deleteUser(userId: string) {
