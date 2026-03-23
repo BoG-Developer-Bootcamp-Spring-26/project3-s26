@@ -13,6 +13,11 @@ export async function getUser(userId: string) {
 
 }
 
+export async function getUserByEmail(email: string) {
+    const user = User.findOne({email: email});
+    return user;
+}
+
 export async function updateUser(userId: string, newData: UserData) {
     const user = User.findByIdAndUpdate(userId, newData);
     return user;
