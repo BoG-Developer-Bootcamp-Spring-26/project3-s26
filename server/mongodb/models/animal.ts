@@ -20,4 +20,4 @@ const animalSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("Animal", );
+export default mongoose.models.Animal || mongoose.model("Animal", animalSchema);

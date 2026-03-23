@@ -23,7 +23,7 @@ export async function deleteUser(userId: string) {
 
 }
 
-// admin functions - all paginated
+// admin function - paginated
 // cursor is the last id of the previous page's object.
 // if getting 1st page, use cursor = start
 // limit is number of objects you want returned in your page
