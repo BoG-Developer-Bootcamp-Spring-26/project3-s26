@@ -1,10 +1,11 @@
 import { Types } from 'mongoose';
 
+// typing for model classes
 export interface UserData{
     _id: Types.ObjectId // user's unique identifier
     fullName: string // user's full name
     email: string // user's email
-    password: string // user's password
+    password: string | null // user's password
     admin: boolean // holds whether or not a user is an admin
 }
 
