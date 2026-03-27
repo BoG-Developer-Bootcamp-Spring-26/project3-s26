@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import argon2 from "argon2"
-import User from "@/server/mongodb/models/User"
-import connectDb from "@/server/mongodb/index"
+import User from "../../../../server/mongodb/models/User"
+import connectDb from "../../../../server/mongodb/index"
 
 interface VerifyApiData {
     userId?: string;
