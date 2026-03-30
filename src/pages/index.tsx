@@ -17,8 +17,6 @@ export default function Login() {
     setError('');
 
     try {
-      // 3. Call your verify API route
-      // (Make sure the path matches where you saved your verify file, e.g., /api/verify)
       const response = await fetch('/api/user/verify', {
         method: 'POST',
         headers: {
@@ -47,7 +45,6 @@ export default function Login() {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-6 text-center text-slate-800">Log In</h1>
         
-        {/* Display backend errors (like "Invalid email or password") here */}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-sm">
             {error}
@@ -83,7 +80,6 @@ export default function Login() {
 
         <div className="mt-6 text-center text-sm">
           <span className="text-gray-600">Don't have an account? </span>
-          {/* Route to Signup Page */}
           <Link href="/signup" className="text-blue-600 hover:underline font-semibold">
             Create one
           </Link>

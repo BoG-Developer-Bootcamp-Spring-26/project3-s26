@@ -5,39 +5,34 @@ import { useState } from 'react';
 export default function Signup() {
   const router = useRouter();
   
-  // State to hold our form inputs
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    admin: false,
-  });
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [admin, setAdmin] = useState(false);
   
-  // State for error handling and loading
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError('');
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match!');
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
-      // Send the POST request to your API endpoint
       const response = await fetch('/api/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+
+        body: JSON.stringify({ fullName, email, password, admin }), 
       });
 
       const data = await response.json();
@@ -46,7 +41,6 @@ export default function Signup() {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      // If successful, route the user back to the login page to sign in
       router.push('/'); 
       
     } catch (err: any) {
@@ -70,28 +64,34 @@ export default function Signup() {
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <input 
             type="text" 
-            name="fullName"
             placeholder="Full Name" 
-            value={formData.fullName}
-            onChange={handleChange}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             className="border p-2 rounded w-full" 
             required
           />
           <input 
             type="email" 
-            name="email"
             placeholder="Email Address" 
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="border p-2 rounded w-full" 
             required
           />
           <input 
             type="password" 
-            name="password"
             placeholder="Choose a Password" 
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="border p-2 rounded w-full" 
+            required
+          />
+          
+          <input 
+            type="password" 
+            placeholder="Confirm Password" 
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="border p-2 rounded w-full" 
             required
           />
@@ -99,9 +99,8 @@ export default function Signup() {
           <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
             <input 
               type="checkbox" 
-              name="admin"
-              checked={formData.admin}
-              onChange={handleChange}
+              checked={admin}
+              onChange={(e) => setAdmin(e.target.checked)}
               className="w-4 h-4"
             />
             Register as Admin
