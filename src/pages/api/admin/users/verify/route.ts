@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { UserData } from "@/types/types";
-import { createUser, deleteUser, getUser, updateUser, getUserByEmail } from "@/server/mongodb/actions/user";
-import connectDb from "@/server/connectDb";
+import { UserData } from "../../../../../types/types";
+import { createUser, deleteUser, updateUser, getUserByEmail } from "../../../../../../server/mongodb/actions/user";
+import connectDb from "../../../../../../server/mongodb/connectDb";
 import * as argon2 from "argon2";
 import { connect } from "http2";
 
@@ -40,7 +40,7 @@ export default async function handler (
                 if (passwordCheck) {
                     return res.status(200).json({
                         message: "User succesfully verified",
-                        userId: existUser._id,
+                        userId: existUser._id.toString(),
                         isAdmin: isAdmin,
                     });
                 } else {

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getAllUsers } from "@/db/actions/user.ts"; // Rename to match updated action
-import connectDb from "server/mongodb/connectDb.ts";
+import { getAllUsers } from "../../../../../server/mongodb/actions/user"; 
+import connectDb from "../../../../../server/mongodb/connectDb";
 
 
 interface UserApiData {

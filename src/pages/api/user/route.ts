@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { UserData } from "@/types/types";
-import { createUser, deleteUser, getUser, updateUser } from "@/db/actions/user";
-import connectDb from "@/db/connectDb";
+import { UserData } from "../../../types/types";
+import { createUser, deleteUser, updateUser } from "../../../../server/mongodb/actions/user";
+import connectDb from "../../../../server/mongodb/connectDb";
 import * as argon2 from "argon2";
 import { connect } from "http2";
 
