@@ -17,8 +17,8 @@ export async function updateUser(userId: string, newData : UserData) {
     return updatedUser;
 }
 
-export async function getUserByUserName(userName: string) {
-    return await user.findOne({userName});
+export async function getUserByEmail(email: string) {
+    return await user.findOne({email});
 }
 
 

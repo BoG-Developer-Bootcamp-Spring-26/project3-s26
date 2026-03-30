@@ -17,7 +17,7 @@ export default async function handler (
 ) {
     if (req.method === 'POST') {
         try {
-            if (!req.body.userName || !req.body.password) {
+            if (!req.body.fullName || !req.body.password || !req.body.email || !req.body.admin) {
                 res.status(500).json({
                     message: "New users must have a username and password"
                 });
@@ -25,8 +25,10 @@ export default async function handler (
             const argon2 = require('argon2');
             const hash = await argon2.hash(req.body.password);
             const userData = {
-                userName : req.body.userName,
+                fullName : req.body.fullName,
                 password : hash,
+                email : req.body.email,
+                admin : req.body.admin,
             } as UserData
             await connectDb();
             const user = await createUser(userData);
