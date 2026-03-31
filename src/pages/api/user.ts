@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { UserData } from "@server/mongodb/types/types";
-import { createUser, getUser, getUsers, deleteUser } from "@server/mongodb/actions/user";
+import { createUser, getUser, getAllUsers, deleteUser } from "@server/mongodb/actions/user";
 import connectDb from "@server/mongodb/connectDb";
 import argon2 from "argon2";
 
@@ -43,7 +43,7 @@ export default async function handler(
   } else if ( req.method === "GET" ) {
     try {
       connectDb();
-      const users = await getUsers();
+      const users = await getAllUsers();
 
       res.status(200).json({
         userData: users,
