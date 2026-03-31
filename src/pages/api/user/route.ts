@@ -17,9 +17,11 @@ export default async function handler (
 ) {
     if (req.method === 'POST') {
         try {
+            const hasAdminValue = req.body.admin === null ? true : false;
+
             if (!req.body.fullName || !req.body.password || !req.body.email || !req.body.admin) {
                 res.status(500).json({
-                    message: "New users must have a username and password"
+                    message: "New users must have a username,password, email, and whether they are an admin or not"
                 });
             }
             const argon2 = require('argon2');
