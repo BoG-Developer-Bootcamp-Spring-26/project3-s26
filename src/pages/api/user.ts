@@ -61,12 +61,12 @@ export default async function handler(
             await connectDb();
             const user = await createUser(userData);
             res.status(200).json({
-                userData: user.select("-password"),
+                userData: user,
                 message: "User successfully created!",
             });
         } catch (e) {
             res.status(500).json({
-                message: "There was an error when adding your user to the database."
+                message: `There was an error when adding your user to the database. ${e}`
             });
         }
     } else {

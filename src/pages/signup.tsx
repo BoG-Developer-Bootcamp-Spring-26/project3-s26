@@ -43,8 +43,8 @@ export default function Signup() {
       if (!response.ok) {
         throw new Error(data.message || 'Something went wrong');
       }
-
-      router.push('/'); 
+      console.log(JSON.stringify(data))
+      router.push(`/dashboard/${data.userData._id}`);
       
     } catch (err: any) {
       setError(err.message);

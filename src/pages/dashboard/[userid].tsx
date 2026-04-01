@@ -8,7 +8,7 @@ export default function userid() {
 
   return (
     <div>
-        <h1>Main Dashboard for user: {userid}</h1>
+        <h1>Main Dashboard for User: {userid}</h1>
     </div>
     
   );
