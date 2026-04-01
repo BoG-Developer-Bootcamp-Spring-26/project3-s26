@@ -15,9 +15,9 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
    
     if (req.method === 'POST') {
         try {
-            const { name, breed, owner } = req.body;
+            const { name, breed, owner, hoursTrained, profilePicture } = req.body;
         
-            if (!name || !breed || !owner) {
+            if (!name || !breed || !owner || !hoursTrained) {
                 return res.status(400).json({ error: "Missing fields" });
             }
 
