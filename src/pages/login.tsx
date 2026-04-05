@@ -18,8 +18,28 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
     try {
-      // Simulate API call
-      console.log("Logging in with", { email, password });
+      const res = await fetch("/api/user/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError("Failed to log in. Please try again.");
+        return;
+      }
+
+      setUser({
+        id: data.userId,
+        fullName: data.fullName,
+        isAdmin: data.isAdmin,
+      });
+
+      router.push("/dashboard");
     } catch (err) {
       setError("Failed to log in. Please try again.");
     } finally {
