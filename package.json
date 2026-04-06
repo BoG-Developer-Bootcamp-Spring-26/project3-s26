@@ -8,6 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "argon2": "^0.44.0",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "mongoose": "^9.3.3",
     "next": "16.0.1",
     "react": "19.2.0",

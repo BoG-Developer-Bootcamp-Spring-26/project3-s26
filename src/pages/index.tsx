@@ -1,6 +1,44 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+
+    const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); 
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/login", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        router.push("dashboard")
+    
+      } else {
+        setError(data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative flex min-h-screen flex-col">
         <header className="flex items-center gap-3 border-b border-gray-300 px-10 py-6 shadow-md">
@@ -10,14 +48,21 @@ export default function Home() {
         <main className="flex flex-1 flex-col items-center justify-center px-6 font-heebo" >
             <h2 className="mb-12 text-5xl font-bold text-black">Login</h2>
             <div className="w-full max-w-xl">
-                <form className= "flex flex-col gap-10">
+                <form className= "flex flex-col gap-10" onSubmit={handleLogin}>
                     <div>
-                        <input id="email" type="email" placeholder="Email" className="w-full border-0 border-b-2 border-[#d13a2f] bg-transparent text-xl outline-none"/>
+                        <input id="email" type="email" placeholder="Email" value = {email} 
+                        onChange= {(e) => setEmail(e.target.value)}
+                        className="w-full border-0 border-b-2 border-[#d13a2f] bg-transparent text-xl outline-none"/>
                     </div>
                     <div>
-                        <input id="password" type="password" placeholder="Password" className="w-full border-0 border-b-2 border-[#d13a2f] bg-transparent text-xl outline-none"/>
+                        <input id="password" type="password" placeholder="Password" value = {password}
+                        onChange = {(e) => setPassword(e.target.value)}
+                        className="w-full border-0 border-b-2 border-[#d13a2f] bg-transparent text-xl outline-none"/>
                     </div>
-                    <button type="submit" className="bg-[#D21312] border rounded-[20px] text-3xl py-2 m-4 text-white font-medium">Log in</button>
+                    <button type="submit" 
+                    disabled = {loading}
+                    className="bg-[#D21312] border rounded-[20px] text-3xl py-2 m-4 text-white font-medium">{loading ? "Logging in ..." : "Log in"}</button>
+                    {error && (<p style={{ color: "red", marginTop: "10px" }}>{error}</p>)}
                 </form>
             </div>
             <p className="mt-4 text-xl font-light text-gray-600">Don't have an account?
