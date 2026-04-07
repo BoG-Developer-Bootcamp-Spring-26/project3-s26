@@ -5,7 +5,7 @@ export default function Sidebar() {
     const router = useRouter();
 
     const isTrainingLogsActive = router.pathname === "/training-logs";
-    const isAnimalsActive = router.pathname === "/animals";
+    const isAnimalsActive = router.pathname === "/animal_dashboard";
     const isAllTrainingActive = router.pathname === "/all-training";
     const isAllAnimalsActive = router.pathname === "/all-animals";
     const isAllUsersActive = router.pathname === "/all-users";
@@ -17,7 +17,7 @@ export default function Sidebar() {
                     <img src={isTrainingLogsActive ? "/images/activeTrainingLogo.png" : "/images/inactiveTrainingLogs.png"} alt="Training Logs icon"/>
                     <span>Training Logs</span>
                 </Link>
-                <Link href="/animals" className = {`flex items-center gap-4 px-4 py-3 rounded-xl ${isAnimalsActive ? "bg-[#D21312] text-white font-semibold" : "text-gray-600"}`}>
+                <Link href="/animal_dashboard" className = {`flex items-center gap-4 px-4 py-3 rounded-xl ${isAnimalsActive ? "bg-[#D21312] text-white font-semibold" : "text-gray-600"}`}>
                     <img src={isAnimalsActive ? "/images/activeAnimalsLogo.png" : "/images/inactiveAnimalLogo.png"} alt="Animals icon"/>
                     <span>Animals</span>
                 </Link>
