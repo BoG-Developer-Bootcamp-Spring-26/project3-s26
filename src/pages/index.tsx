@@ -243,6 +243,12 @@ export default function Home() {
 
       </div>
       </div>
+
+      <footer className="w-full py-8 text-center text-[12px] text-gray-500 z-10 leading-relaxed">
+        <p>Made with ♡ by Andrew Liu & Jaahnvi Toolsidas</p>
+        <p>© Spring 2026 BOG Developer Bootcamp. All rights reserved.</p>
+      </footer>
     </div>
   );
-} 
+}
+

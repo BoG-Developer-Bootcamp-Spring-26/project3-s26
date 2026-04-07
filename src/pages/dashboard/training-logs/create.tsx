@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import TitleBar from '@/components/Titlebar';
 import Sidebar from '@/components/Sidebar';
+import { X } from 'lucide-react';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSideUser, SessionUser } from '@server/utils/getServerSideUser';
 
@@ -69,11 +70,18 @@ export default function CreateTrainingLog({ user }: { user: SessionUser }) {
         <Sidebar user={user} />
 
         <main className="flex-1 flex flex-col bg-white overflow-y-auto">
-          <div className="px-10 py-6 border-b border-gray-100">
+          <div className="flex items-center justify-between px-10 py-6 border-b border-gray-100">
             <h1 className="text-2xl font-semibold text-gray-700">Training logs</h1>
+            <button 
+              type="button"
+              className="flex items-center gap-2 text-gray-400 hover:text-red-600 transition-colors text-sm font-medium"
+            >
+              <X size={20} strokeWidth={2.5} />
+              <span>Delete log</span>
+            </button>
           </div>
-          <div className="flex-1 p-10 flex justify-center">
 
+          <div className="flex-1 p-10 flex justify-center">
             <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-4xl">
 
               <div>

@@ -4,6 +4,7 @@ import TitleBar from '@/components/Titlebar';
 import Sidebar from '@/components/Sidebar';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSideUser, SessionUser } from '@server/utils/getServerSideUser';
+import { X } from 'lucide-react';
 
 export default function CreateAnimal({ user }: { user: SessionUser }) {
   const router = useRouter();
@@ -44,9 +45,16 @@ export default function CreateAnimal({ user }: { user: SessionUser }) {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar user={user} />
 
-        <main className="flex-1 flex flex-col bg-white overflow-y-auto">
-          <div className="px-10 py-6 border-b border-gray-100">
-            <h1 className="text-2xl font-semibold text-gray-700">Animals</h1>
+         <main className="flex-1 flex flex-col bg-white overflow-y-auto">
+          <div className="flex items-center justify-between px-10 py-6 border-b border-gray-100">
+            <h1 className="text-2xl font-semibold text-gray-700">Training logs</h1>
+            <button 
+              type="button"
+              className="flex items-center gap-2 text-gray-400 hover:text-red-600 transition-colors text-sm font-medium"
+            >
+              <X size={20} strokeWidth={2.5} />
+              <span>Delete log</span>
+            </button>
           </div>
 
           <div className="flex-1 p-10 flex justify-center">
