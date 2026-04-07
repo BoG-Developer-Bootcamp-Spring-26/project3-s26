@@ -13,6 +13,7 @@ export default function CreateAccountPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [admin, setAdmin] = useState(false);
   const [error, setError] = useState("");
 
   const trySignup = async () => {
@@ -25,7 +26,7 @@ export default function CreateAccountPage() {
       const res = await fetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, password, admin: false }),
+        body: JSON.stringify({ fullName, email, password, admin }),
       });
 
       const data = await res.json();
@@ -152,6 +153,24 @@ export default function CreateAccountPage() {
                   }}
                   required
                 />
+              </label>
+
+              <label className="-mt-[6px] flex items-center gap-[12px]">
+                <input
+                  type="checkbox"
+                  name="admin"
+                  className="relative h-[25px] w-[25px] appearance-none rounded-none border-[2.5px] border-[#D21312] bg-white align-middle checked:bg-[#D21312] checked:border-[#D21312] focus:outline-none after:absolute after:left-[7px] after:top-[3px] after:h-[12px] after:w-[6px] after:rotate-45 after:border-b-[3px] after:border-r-[3px] after:border-white after:content-[''] after:opacity-0 checked:after:opacity-100"
+                  checked={admin}
+                  onChange={(e) => {
+                    setAdmin(e.target.checked);
+                    if (error) setError("");
+                  }}
+                />
+                <span
+                  className={`${heebo.className} text-[25px] font-light leading-none text-black`}
+                >
+                  Admin access
+                </span>
               </label>
 
               {error && <p style={{ color: "#D21312" }}>{error}</p>}
