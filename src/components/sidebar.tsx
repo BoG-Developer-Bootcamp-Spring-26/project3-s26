@@ -83,7 +83,11 @@ export const Sidebar = ({ currentPage, user, isAdmin }: Props) => {
                 </p>
             </div>
             <div className="ml-auto">
-                <Link href="/login">
+                <Link href="/login" onClick={() => {
+                    fetch("/api/users/logout", {
+                        method: "POST",
+                    });
+                }}>
                     <Image src={logoutLogo} alt="logout logo" className="self-center h-5 w-auto"/>
                 </Link>
             </div>
