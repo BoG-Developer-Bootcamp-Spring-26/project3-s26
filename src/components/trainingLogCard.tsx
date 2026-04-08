@@ -18,10 +18,10 @@ export const TrainingLogCard = ({ user, animal, breed, title, date, description,
     const month = date.toLocaleString('default', { month: 'short' });
     const year = date.getFullYear();
 
-	return <div className="flex w-4/5 rounded-xl bg-white drop-shadow font-heebo">
+	return <div className="flex w-6/7 rounded-xl bg-white drop-shadow font-heebo">
         <div className="flex font-oswald flex-col items-center w-1/10 bg-[#070A52D9] text-white py-4 px-2 rounded-l-xl gap-1">
             <h2 className="font-medium text-3xl">{day}</h2>
-            <h3 className="text-base">{month} - {year}</h3>
+            <h3 className="text-base text-center">{month} - {year}</h3>
         </div>
         <div className = "mx-3 my-1">
             <div className = "flex items-center">

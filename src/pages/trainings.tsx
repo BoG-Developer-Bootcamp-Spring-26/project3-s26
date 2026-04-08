@@ -1,8 +1,11 @@
 import { TrainingLogCard } from "../components/trainingLogCard";
+import { Sidebar } from "../components/sidebar";
 
 export default function Trainings() {
     return(
-        <div className="flex flex-col items-center gap-4 py-8">
+        <div className="flex flex-row h-screen w-screen">
+        <Sidebar currentPage="trainings" user="Long Lam" isAdmin={true}/>
+        <div className="flex flex-1 flex-col items-center gap-4 py-8">
             <TrainingLogCard
                 user="Long Lam"
                 animal="Lucy"
@@ -12,6 +15,7 @@ export default function Trainings() {
                 description="Lucy finishes the sit lessons very well today. Should give her a treat."
                 hours={20}
             />
+        </div>
         </div>
     );
 }
