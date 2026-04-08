@@ -10,8 +10,8 @@ export default function Sidebar() {
     const isAllTrainingActive = router.pathname === "/all-training";
     const isAllAnimalsActive = router.pathname === "/all-animals";
     const isAllUsersActive = router.pathname === "/all-users";
-    const logout = router.pathname === "/index";
     const { user } = useAuth(); 
+    const { logout } = useAuth(); 
 
 
     return (
@@ -85,7 +85,7 @@ export default function Sidebar() {
             href = "/"
             >
             <img src = "/images/logoutLogo.png" alt="Logout icon" className="mt-4 cursor-pointer" onClick={() => {
-                localStorage.removeItem("user");
+                logout;
             }}/>
             </Link>
             </div>
