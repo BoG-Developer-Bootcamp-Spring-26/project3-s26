@@ -6,31 +6,39 @@ import { useAuth } from "@/AuthContext";
 import ProgressBar from "@/component/progressbar";
 
 export default function Home() {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const res = await fetch("/api/verify", {
+      const res = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          fullName,
+          email,
+          password,
+          confirmPassword,
+          isAdmin,
+        }),
       });
 
       const data = await res.json();
 
       if (data.success) {
         login(data);
-        localStorage.setItem("userId", data.userid);
-        localStorage.setItem("isAdmin", String(data.isAdmin));
         router.push("/training-logs");
       } else {
         setError(data.error);
@@ -47,11 +55,21 @@ export default function Home() {
     <div className="relative flex min-h-screen flex-col">
       <ProgressBar />
       <main className="flex flex-1 flex-col items-center justify-center px-4 py-6 font-heebo sm:px-6 sm:py-8">
-        <h2 className="mb-6 text-3xl font-bold text-black sm:mb-8 sm:text-4xl lg:text-5xl">
-          Login
+        <h2 className="mb-6 text-center text-3xl font-bold text-black sm:mb-8 sm:text-4xl lg:text-5xl">
+          Create Account
         </h2>
         <div className="w-full max-w-md lg:max-w-xl">
-          <form className="flex flex-col gap-6 sm:gap-8" onSubmit={handleLogin}>
+          <form className="flex flex-col gap-5 sm:gap-6" onSubmit={handleSignup}>
+            <div>
+              <input
+                id="name"
+                type="text"
+                placeholder="Full Name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full border-0 border-b-2 border-[#d13a2f] bg-transparent pb-2 text-lg outline-none sm:text-xl"
+              />
+            </div>
             <div>
               <input
                 id="email"
@@ -72,20 +90,39 @@ export default function Home() {
                 className="w-full border-0 border-b-2 border-[#d13a2f] bg-transparent pb-2 text-lg outline-none sm:text-xl"
               />
             </div>
+            <div>
+              <input
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full border-0 border-b-2 border-[#d13a2f] bg-transparent pb-2 text-lg outline-none sm:text-xl"
+              />
+            </div>
+            <label className="flex cursor-pointer items-center gap-2 text-base sm:text-lg">
+              <input
+                type="checkbox"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+                className="h-5 w-5 cursor-pointer rounded-none"
+              />
+              Admin Access
+            </label>
             <button
               type="submit"
               disabled={loading}
               className="mx-auto w-full min-w-[200px] rounded-[20px] bg-[#D21312] px-8 py-3 text-xl font-medium text-white sm:w-auto sm:text-2xl lg:text-3xl"
             >
-              {loading ? "Logging in ..." : "Log in"}
+              {loading ? "Signing Up.." : "Sign Up"}
             </button>
             {error && <p className="text-red-600">{error}</p>}
           </form>
         </div>
         <p className="mt-4 text-center text-base font-light text-gray-600 sm:text-lg lg:text-xl">
-          Don&apos;t have an account?
-          <Link href="/signup" className="font-semibold text-black">
-            {" "}Sign up
+          Already have an account?
+          <Link href="/" className="font-semibold text-black">
+            {" "}Sign in
           </Link>
         </p>
       </main>
