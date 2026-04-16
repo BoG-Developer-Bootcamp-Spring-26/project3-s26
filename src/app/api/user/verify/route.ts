@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as argon2 from 'argon2';
-import connectDB from '@/lib/db';
+import connectDB from '@/db/connectDB';
 import User from '@/models/User';
 
 export async function POST(req: NextRequest) {
