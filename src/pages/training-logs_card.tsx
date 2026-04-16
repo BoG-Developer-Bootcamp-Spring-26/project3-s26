@@ -55,7 +55,7 @@ export default function TrainingLogsCard( {id, title, date, month, year, userNam
             id="image"
             className="flex shrink-0 items-center justify-end border-t border-gray-100 px-4 py-3 sm:border-t-0 sm:pl-0 sm:pr-4 sm:pt-4"
           >
-            <Link href={`/create_training-log/${id}`}>
+            <Link href={`/edit_training-log/${id}`}>
               <img
                 src="/images/trainingLogCardEditButton.png"
                 alt="Edit training log"

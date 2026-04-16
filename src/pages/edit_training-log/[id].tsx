@@ -33,45 +33,49 @@ export default function EditTrainingLog() {
     
     const router = useRouter();
     const { id } = router.query;
+    const {user} = useAuth()
 
-    const handleCreateTrainingLog = async (e: React.FormEvent) => {
+    const handleUpdateTrainingLog = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError("");
 
+        if (typeof id !== "string") {
+            setError("Invalid training log id");
+            setLoading(false);
+            return;
+        }
+
         try {
-            const newTrainingLog = {
+            const updatedTrainingLog = {
+                id,
                 title,
                 animalId,
                 userId: user?.id,
                 hours: Number(hours),
                 description,
-                date: new Date().toISOString()
             };
 
-            const res = await fetch ("/api/training-log", {
-                method: "POST",
+            const res = await fetch("/api/training-log", {
+                method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(newTrainingLog)
+                body: JSON.stringify(updatedTrainingLog),
             });
 
             if (!res.ok) {
                 const data = await res.json();
-                throw new Error(data.message || "Failed to create training log");
+                throw new Error(data.message || "Failed to update training log");
             }
 
             router.push("/training-logs");
-
         } catch (error) {
-            setError("Failed to create training log");
+            setError(error instanceof Error ? error.message : "Failed to update training log");
         } finally {
             setLoading(false);
         }
-    }
-
-    const {user} = useAuth()
+    };
 
     async function getAnimals(): Promise<Animal[]> {
         try {
@@ -100,6 +104,22 @@ export default function EditTrainingLog() {
         }
     }
 
+    async function getTrainingLogById(trainingLogId: string): Promise<TrainingLog | null> {
+        try {
+            const res = await fetch(`/api/training-log?id=${trainingLogId}`);
+
+            if (!res.ok) {
+                throw new Error("Failed to fetch training log");
+            }
+
+            const data = await res.json();
+            return data.data || null;
+        } catch (error) {
+            console.error("Failed to fetch training log:", error);
+            return null;
+        }
+    }
+
     useEffect(() => {
         if (!user) {
             return;
@@ -109,6 +129,24 @@ export default function EditTrainingLog() {
             setAnimals(animalData);
         });
     }, [user]);
+
+    useEffect(() => {
+        if (typeof id !== "string") {
+            return;
+        }
+
+        getTrainingLogById(id).then((log) => {
+            if (!log) {
+                setError("Training log not found");
+                return;
+            }
+
+            setTitle(log.title);
+            setAnimalId(log.animalId);
+            setHours(String(log.hours));
+            setDescription(log.description);
+        });
+    }, [id]);
 
     return (
         <div className="relative flex min-h-screen flex-col">
@@ -127,7 +165,7 @@ export default function EditTrainingLog() {
                             </h2>
                         </div>
 
-                        <form onSubmit={handleCreateTrainingLog} className="flex flex-col gap-5 rounded-2xl bg-white p-4 shadow-sm sm:gap-6 sm:p-6">
+                        <form onSubmit={handleUpdateTrainingLog} className="flex flex-col gap-5 rounded-2xl bg-white p-4 shadow-sm sm:gap-6 sm:p-6">
                             <div className="flex flex-col gap-2">
                                 <label className="text-lg font-semibold text-[#222222] sm:text-[20px]">Title</label>
                                 <input 

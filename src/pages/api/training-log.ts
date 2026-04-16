@@ -96,9 +96,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method="PATCH") {
+        console.log("PATCH BODY:", req.body);
+
         const {id, title, date, animalId, userId, hours, description} = req.body;
 
-        if (!id || !title || !date || !animalId || !userId || hours === undefined || description === undefined || description.trim() === "") {
+        if (!id || !title || !animalId || !userId || hours === undefined || description === undefined || description.trim() === "") {
             return res.status(400).json({message : "Missing required field"})
         }
 
@@ -117,7 +119,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
 
             existingTrainingLog.title = title;
-            existingTrainingLog.date = date;
             existingTrainingLog.animalId = animalId;
             existingTrainingLog.hours = hours;
             existingTrainingLog.description = description;
