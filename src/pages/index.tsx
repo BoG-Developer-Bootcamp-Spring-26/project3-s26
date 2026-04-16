@@ -49,12 +49,9 @@ export default function Home() {
       <main className="flex flex-1 items-center justify-center px-4 py-6 font-heebo sm:px-6 sm:py-8 lg:px-8">
         <div className="w-full max-w-xl">
           <div className="w-full rounded-[28px] border border-white/60 bg-white/90 p-6 shadow-[0_20px_60px_rgba(210,19,18,0.08)] backdrop-blur sm:p-8 lg:p-10">
-            <h2 className="mb-2 text-3xl font-bold text-black sm:text-4xl">
+            <h2 className="flex flex-1 items-center justify-center mb-2 text-3xl font-bold text-black sm:text-4xl">
               Login
             </h2>
-            <p className="mb-6 text-sm text-neutral-500 sm:mb-8 sm:text-base">
-              Enter your account details to continue.
-            </p>
             <form className="flex flex-col gap-6 sm:gap-8" onSubmit={handleLogin}>
               <div>
               <input
