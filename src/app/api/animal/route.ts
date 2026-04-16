@@ -1,51 +1,34 @@
-// src/app/api/animal/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/db/connectDB';
 import Animal from '@/models/Animal';
-import User from '@/models/User';
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { name, breed, hoursTrained, profilePic, userId } = body;
-
-    if (!name || !breed || hoursTrained === undefined || !profilePic || !userId) {
-      return NextResponse.json(
-        { message: 'All fields are required' },
-        { status: 400 }
-      );
-    }
-
     await connectDB();
+    const body = await req.json();
+    
+    const { name, breed, userId, hoursTrained, profilePic } = body;
 
-    const user = await User.findById(userId);
-    if (!user) {
+    if (!name || !breed || !userId || hoursTrained === undefined || !profilePic) {
       return NextResponse.json(
-        { message: 'User not found' },
+        { message: "All fields are required" }, 
         { status: 400 }
       );
     }
 
-    const animal = await Animal.create({
-      name,
-      breed,
-      hoursTrained,
-      profilePic,
-      userId,
-    });
+    const newAnimal = new Animal({ name, breed, userId, hoursTrained, profilePic });
+    await newAnimal.save();
 
-    return NextResponse.json(
-      { message: 'Animal created successfully', animalId: animal._id },
-      { status: 200 }
-    );
+    return NextResponse.json(newAnimal, { status: 201 });
   } catch (error) {
-    console.error('POST /api/animal error:', error);
+    console.error("BACKEND ERROR:", error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { message: "Internal server error" }, 
       { status: 500 }
     );
   }
 }
+
 export async function PATCH(req: NextRequest) {
   try {
     await connectDB();
@@ -63,8 +46,9 @@ export async function PATCH(req: NextRequest) {
     const updatedAnimal = await Animal.findByIdAndUpdate(
       animalId,
       updateData,
-      { new: true, runValidators: true } 
+      { new: true, runValidators: true }
     );
+
     if (!updatedAnimal) {
       return NextResponse.json(
         { message: "Animal not found in the database" }, 
@@ -75,7 +59,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json(updatedAnimal, { status: 200 });
 
   } catch (error) {
-    console.error('PATCH /api/animal error:', error);
+    console.error("BACKEND ERROR:", error);
     return NextResponse.json(
       { message: "Internal server error" }, 
       { status: 500 }
