@@ -136,7 +136,7 @@ export default function Page() {
 ## Backend Specifications
 
 - We will be incorporating all we have learned thus far such as API endpoints and database querying!
-- Create all endpoints in `src/app/api`
+- Create all endpoints in `src/pages/api`
 - Reminder that routes are created by using a `route.ts` file
 
 ### Create Operations
